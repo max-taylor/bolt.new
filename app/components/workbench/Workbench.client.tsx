@@ -44,7 +44,6 @@ const workbenchVariants = {
     },
   },
   open: {
-    width: 'var(--workbench-width)',
     transition: {
       duration: 0.2,
       ease: cubicEasingFn,
@@ -109,11 +108,7 @@ export const Workbench = memo(({ chatStarted, isStreaming }: WorkspaceProps) => 
       >
         <div
           className={classNames(
-            'fixed top-[calc(var(--header-height)+1.5rem)] bottom-6 w-[var(--workbench-inner-width)] mr-4 z-0 transition-[left,width] duration-200 bolt-ease-cubic-bezier',
-            {
-              'left-[var(--workbench-left)]': showWorkbench,
-              'left-[100%]': !showWorkbench,
-            },
+            'w-full top-[calc(var(--header-height)+1.5rem)] bottom-6 w-[var(--workbench-inner-width)] mr-4 z-0 transition-[left,width] duration-200 bolt-ease-cubic-bezier',
           )}
         >
           <div className="absolute inset-0 px-6">

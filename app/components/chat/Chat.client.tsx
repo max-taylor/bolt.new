@@ -93,12 +93,21 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
   });
 
   const [params] = useSearchParams();
+  const path = useParams();
 
   useEffect(() => {
-    let query = params.get('prompt');
-    if (query) {
-      sendMessage(null as any, query);
-    }
+    (async () => {
+      let query = params.get('prompt');
+      if (query) {
+        sendMessage(null as any, query);
+
+        if (!path.id) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          window.location.reload();
+        }
+      }
+    })();
   }, []);
 
   const { enhancingPrompt, promptEnhanced, enhancePrompt, resetEnhancer } = usePromptEnhancer();
