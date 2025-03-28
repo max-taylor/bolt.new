@@ -99,7 +99,8 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
     (async () => {
       let query = params.get('prompt');
       if (query) {
-        sendMessage(null as any, query);
+        const decodedQuery = decodeURI(query);
+        sendMessage(null as any, decodedQuery);
 
         if (!path.id) {
           await new Promise((resolve) => setTimeout(resolve, 1000));
