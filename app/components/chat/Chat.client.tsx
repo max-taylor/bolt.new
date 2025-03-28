@@ -12,6 +12,7 @@ import { fileModificationsToHTML } from '~/utils/diff';
 import { cubicEasingFn } from '~/utils/easings';
 import { createScopedLogger, renderLogger } from '~/utils/logger';
 import { BaseChat } from './BaseChat';
+import { useParams, useSearchParams } from '@remix-run/react';
 
 const toastAnimation = cssTransition({
   enter: 'animated fadeInRight',
@@ -24,6 +25,10 @@ export function Chat() {
   renderLogger.trace('Chat');
 
   const { ready, initialMessages, storeMessageHistory } = useChatHistory();
+
+  useEffect(() => {
+    chatStore.setKey('started', initialMessages.length > 0);
+  }, []);
 
   return (
     <>
@@ -86,6 +91,15 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
     },
     initialMessages,
   });
+
+  const [params] = useSearchParams();
+
+  useEffect(() => {
+    let query = params.get('prompt');
+    if (query) {
+      sendMessage(null as any, query);
+    }
+  }, []);
 
   const { enhancingPrompt, promptEnhanced, enhancePrompt, resetEnhancer } = usePromptEnhancer();
   const { parsedMessages, parseMessages } = useMessageParser();
@@ -229,6 +243,7 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
           scrollTextArea();
         });
       }}
+      hideChat={true}
     />
   );
 });
