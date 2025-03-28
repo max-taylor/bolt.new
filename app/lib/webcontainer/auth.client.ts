@@ -3,4 +3,11 @@
  * to avoid importing `@webcontainer/api` in the server bundle.
  */
 
-export { auth, type AuthAPI } from '@webcontainer/api';
+import { auth, type AuthAPI } from '@webcontainer/api';
+
+auth.init({
+  clientId: 'wc_api_maxjt11_14c28d91bb9e93f0d62f147195e757d2',
+  scope: '',
+});
+
+export { auth };
